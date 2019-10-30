@@ -8,11 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface TaskDAO {
+    List<TaskAbstract> list(@Param("from") Integer from, @Param("to") Integer to, @Param("lid") String lid);
     void deleteTask(@Param("tid") String tid);
-    void deleteTaskByList(@Param("lid") String lid);
     void deleteTaskLong(@Param("tid") String tid);
     void deleteTaskInterval(@Param("tid") String tid);
     void deleteTaskTemp(@Param("tid") String tid);

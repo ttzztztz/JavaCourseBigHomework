@@ -3,8 +3,8 @@ package com.rabbit.todo.Service;
 import com.rabbit.todo.DAO.ListDAO;
 import com.rabbit.todo.POJO.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,15 +12,29 @@ import java.util.List;
 public class ListService {
     private ListDAO listDAO;
 
-    @Value("${rabbit.page.size}")
-    private Integer PAGESIZE;
-
     @Autowired
     public ListService(ListDAO listDAO) {
         this.listDAO = listDAO;
     }
 
-    public List<TaskList> list(Integer page) {
-        return listDAO.list((page - 1) * PAGESIZE, page * PAGESIZE);
+    public List<TaskList> all() {
+        return listDAO.all();
+    }
+
+    public void create(TaskList list) {
+        listDAO.create(list);
+    }
+
+    @Transactional
+    public void cascadeDelete(String lid) {
+        listDAO.cascadeIntervalTask(lid);
+        listDAO.cascadeLongTask(lid);
+        listDAO.cascadeTempTask(lid);
+        listDAO.deleteList(lid);
+        listDAO.deleteTaskList(lid);
+    }
+
+    public void update(TaskList list) {
+        listDAO.edit(list.getLid(), list.getName(), list.getRank());
     }
 }

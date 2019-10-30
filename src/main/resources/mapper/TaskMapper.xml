@@ -2,57 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.rabbit.todo.DAO.TaskDAO">
+    <select id="list" resultType="TaskAbstract">
+        SELECT *
+        FROM todo.task
+        <if test='lid != "all"'>
+            WHERE lid = #{lid}
+        </if>
+        ORDER BY `rank`
+        LIMIT ${from}, ${to}
+    </select>
+
     <select id="task" resultType="TaskAbstract">
         SELECT *
-        FROM `todo`.task
+        FROM todo.task
         WHERE tid = #{tid}
     </select>
 
     <select id="longTask" resultType="LongTask">
         SELECT *
-        FROM `todo`.long_task
+        FROM todo.long_task
         WHERE tid = #{tid}
     </select>
 
     <select id="tempTask" resultType="TempTask">
         SELECT *
-        FROM `todo`.temp_task
+        FROM todo.temp_task
         WHERE tid = #{tid}
     </select>
 
     <select id="intervalTask" resultType="IntervalTask">
         SELECT *
-        FROM `todo`.interval_task
+        FROM todo.interval_task
         WHERE tid = #{tid}
     </select>
 
     <delete id="deleteTask">
         DELETE
-        FROM `todo`.`task`
+        FROM todo.task
         WHERE tid = #{tid}
-    </delete>
-
-    <delete id="deleteTaskByList">
-        DELETE
-        FROM `todo`.`task`
-        WHERE lid = #{lid}
     </delete>
 
     <delete id="deleteTaskLong">
         DELETE
-        FROM `todo`.long_task
+        FROM todo.long_task
         WHERE tid = #{tid}
     </delete>
 
     <delete id="deleteTaskInterval">
         DELETE
-        FROM `todo`.interval_task
+        FROM todo.interval_task
         WHERE tid = #{tid}
     </delete>
 
     <delete id="deleteTaskTemp">
         DELETE
-        FROM `todo`.temp_task
+        FROM todo.temp_task
         WHERE tid = #{tid}
     </delete>
 

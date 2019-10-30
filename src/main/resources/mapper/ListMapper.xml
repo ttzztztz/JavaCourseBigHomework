@@ -2,11 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.rabbit.todo.DAO.ListDAO">
-    <select id="list" resultType="TaskList">
+    <select id="all" resultType="TaskList">
         SELECT `lid`, `name`, `rank`
         FROM todo.list
         ORDER BY `rank`
-        LIMIT ${from}, ${to}
     </select>
 
     <insert id="create" useGeneratedKeys="true" keyProperty="lid" keyColumn="lid" parameterType="TaskList">
@@ -27,5 +26,46 @@
         WHERE lid = #{lid}
     </update>
 
+    <delete id="cascadeTempTask">
+        DELETE
+        FROM todo.temp_task
+        WHERE tid in (
+            SELECT tid
+            FROM todo.task
+            WHERE lid = #{lid}
+        )
+    </delete>
+
+    <delete id="cascadeIntervalTask">
+        DELETE
+        FROM todo.interval_task
+        WHERE tid in (
+            SELECT tid
+            FROM todo.task
+            WHERE lid = #{lid}
+        )
+    </delete>
+
+    <delete id="cascadeLongTask">
+        DELETE
+        FROM todo.long_task
+        WHERE tid in (
+            SELECT tid
+            FROM todo.task
+            WHERE lid = #{lid}
+        )
+    </delete>
+
+    <delete id="deleteTaskList">
+        DELETE
+        FROM todo.task
+        WHERE lid = #{lid};
+    </delete>
+
+    <delete id="deleteList">
+        DELETE
+        FROM todo.list
+        WHERE lid = #{lid};
+    </delete>
 
 </mapper>
