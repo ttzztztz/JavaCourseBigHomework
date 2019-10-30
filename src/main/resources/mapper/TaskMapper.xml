@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rabbit.todo.DAO.TaskDAO">
+    <select id="task" resultType="TaskAbstract">
+        SELECT *
+        FROM `todo`.task
+        WHERE tid = #{tid}
+    </select>
+
+    <select id="longTask" resultType="LongTask">
+        SELECT *
+        FROM `todo`.long_task
+        WHERE tid = #{tid}
+    </select>
+
+    <select id="tempTask" resultType="TempTask">
+        SELECT *
+        FROM `todo`.temp_task
+        WHERE tid = #{tid}
+    </select>
+
+    <select id="intervalTask" resultType="IntervalTask">
+        SELECT *
+        FROM `todo`.interval_task
+        WHERE tid = #{tid}
+    </select>
+
+    <delete id="deleteTask">
+        DELETE
+        FROM `todo`.`task`
+        WHERE tid = #{tid}
+    </delete>
+
+    <delete id="deleteTaskByList">
+        DELETE
+        FROM `todo`.`task`
+        WHERE lid = #{lid}
+    </delete>
+
+    <delete id="deleteTaskLong">
+        DELETE
+        FROM `todo`.long_task
+        WHERE tid = #{tid}
+    </delete>
+
+    <delete id="deleteTaskInterval">
+        DELETE
+        FROM `todo`.interval_task
+        WHERE tid = #{tid}
+    </delete>
+
+    <delete id="deleteTaskTemp">
+        DELETE
+        FROM `todo`.temp_task
+        WHERE tid = #{tid}
+    </delete>
+
+    <insert id="insertTask" keyColumn="tid" keyProperty="tid" useGeneratedKeys="true" parameterType="TaskAbstract">
+        INSERT INTO todo.task(lid, name, description, type, `rank`, status)
+        VALUES (#{lid}, #{name}, #{description}, #{type}, #{rank}, #{status})
+    </insert>
+
+    <insert id="insertLongTask" parameterType="LongTask">
+        INSERT INTO todo.long_task(tid, deadLine, subTaskList)
+        VALUES (#{tid}, #{deadLine}, #{subTaskList})
+    </insert>
+
+    <insert id="insertIntervalTask" parameterType="IntervalTask">
+        INSERT INTO todo.interval_task(tid, lastExecuted, cycle)
+        VALUES (#{tid}, #{lastExecuted}, #{cycle})
+    </insert>
+
+    <insert id="insertTempTask" parameterType="TempTask">
+        INSERT INTO todo.temp_task(tid, deadLine)
+        VALUES (#{tid}, #{deadLine})
+    </insert>
+
+    <update id="updateTask" parameterType="TaskAbstract">
+        UPDATE todo.task
+        <set>
+            <if test="lid != null">
+                lid = #{lid},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="rank != null">
+                `rank` = #{rank},
+            </if>
+            <if test="status != null">
+                `status` = #{status}
+            </if>
+        </set>
+        WHERE tid = #{tid}
+    </update>
+
+    <update id="updateLongTask" parameterType="LongTask">
+        UPDATE todo.long_task
+        <set>
+            <if test="deadLine != null">
+                deadLine = #{deadLine},
+            </if>
+            <if test="subTaskList != null">
+                subTaskList = #{subTaskList},
+            </if>
+        </set>
+        WHERE tid = #{tid}
+    </update>
+
+    <update id="updateTempTask" parameterType="TempTask">
+        UPDATE todo.temp_task
+        <set>
+            <if test="deadLine != null">
+                deadLine = #{deadLine},
+            </if>
+        </set>
+        WHERE tid = #{tid}
+    </update>
+
+    <update id="updateIntervalTask" parameterType="IntervalTask">
+        UPDATE todo.interval_task
+        <set>
+            <if test="lastExecuted != null">
+                lastExecuted = #{lastExecuted},
+            </if>
+            <if test="cycle != null">
+                cycle = #{cycle}
+            </if>
+        </set>
+        WHERE tid = #{tid}
+    </update>
+</mapper>

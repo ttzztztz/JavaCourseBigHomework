@@ -2,11 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.rabbit.todo.DAO.ListDAO">
-    <select id="list" resultType="com.rabbit.todo.POJO.TaskList">
+    <select id="list" resultType="TaskList">
         SELECT `lid`, `name`, `rank`
         FROM todo.list
         ORDER BY `rank`
         LIMIT ${from}, ${to}
     </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="lid" keyColumn="lid" parameterType="TaskList">
+        INSERT INTO `todo`.list(name, `rank`)
+        VALUES (#{name}, #{rank})
+    </insert>
+
+    <update id="edit">
+        UPDATE todo.list
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="rank != null">
+                `rank` = #{rank}
+            </if>
+        </set>
+        WHERE lid = #{lid}
+    </update>
+
 
 </mapper>

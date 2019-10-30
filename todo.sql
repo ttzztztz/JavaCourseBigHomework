@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Oct 29, 2019 at 08:47 AM
+-- Generation Time: Oct 30, 2019 at 06:58 AM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.22
 
@@ -127,33 +127,15 @@ ALTER TABLE `temp_task`
 --
 
 --
--- AUTO_INCREMENT for table `interval_task`
---
-ALTER TABLE `interval_task`
-  MODIFY `tid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `list`
 --
 ALTER TABLE `list`
   MODIFY `lid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `long_task`
---
-ALTER TABLE `long_task`
-  MODIFY `tid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `tid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `temp_task`
---
-ALTER TABLE `temp_task`
   MODIFY `tid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
