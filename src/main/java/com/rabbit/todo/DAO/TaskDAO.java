@@ -13,11 +13,13 @@ import java.util.List;
 @Repository
 @Mapper
 public interface TaskDAO {
+    String taskType(@Param("tid") String tid);
+
     List<TaskAbstract> list(@Param("from") Integer from, @Param("to") Integer to, @Param("lid") String lid);
     void deleteTask(@Param("tid") String tid);
-    void deleteTaskLong(@Param("tid") String tid);
-    void deleteTaskInterval(@Param("tid") String tid);
-    void deleteTaskTemp(@Param("tid") String tid);
+    void cascadeTaskLong(@Param("tid") String tid);
+    void cascadeTaskInterval(@Param("tid") String tid);
+    void cascadeTaskTemp(@Param("tid") String tid);
 
     TaskAbstract task(@Param("tid") String tid);
     LongTask longTask(@Param("tid") String tid);

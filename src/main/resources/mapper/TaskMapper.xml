@@ -42,19 +42,19 @@
         WHERE tid = #{tid}
     </delete>
 
-    <delete id="deleteTaskLong">
+    <delete id="cascadeTaskLong">
         DELETE
         FROM todo.long_task
         WHERE tid = #{tid}
     </delete>
 
-    <delete id="deleteTaskInterval">
+    <delete id="cascadeTaskInterval">
         DELETE
         FROM todo.interval_task
         WHERE tid = #{tid}
     </delete>
 
-    <delete id="deleteTaskTemp">
+    <delete id="cascadeTaskTemp">
         DELETE
         FROM todo.temp_task
         WHERE tid = #{tid}
@@ -135,9 +135,15 @@
                 lastExecuted = #{lastExecuted},
             </if>
             <if test="cycle != null">
-                cycle = #{cycle}
+                `cycle` = #{cycle}
             </if>
         </set>
         WHERE tid = #{tid}
     </update>
+
+    <select id="taskType">
+        SELECT type
+        FROM todo.task
+        WHERE tid = #{tid}
+    </select>
 </mapper>

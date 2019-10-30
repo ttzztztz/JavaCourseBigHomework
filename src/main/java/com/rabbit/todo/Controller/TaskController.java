@@ -1,14 +1,13 @@
 package com.rabbit.todo.Controller;
 
-import com.rabbit.todo.POJO.GeneralResponse;
-import com.rabbit.todo.POJO.TaskAbstract;
+import com.rabbit.todo.Exception.InvalidTypeException;
+import com.rabbit.todo.POJO.*;
 import com.rabbit.todo.Service.TaskService;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/task")
@@ -35,5 +34,101 @@ public class TaskController {
         return response;
     }
 
+    @GetMapping("/{tid}")
+    public GeneralResponse<TaskResponse> task(@PathVariable("tid") String tid) throws InvalidTypeException {
+        GeneralResponse<TaskResponse> response = new GeneralResponse<>();
+        response.setMessage(taskService.taskResponse(tid));
+        return response;
+    }
 
+    @DeleteMapping("/{tid}")
+    public GeneralResponse<String> deleteTask(@PathVariable("tid") String tid) throws InvalidTypeException {
+        GeneralResponse<String> response = new GeneralResponse<>();
+        taskService.delete(tid);
+        response.setMessage(tid);
+        return response;
+    }
+
+    @PostMapping("/create/long")
+    public GeneralResponse<String> createLongTask(@RequestBody @Valid LongTaskForm form) throws NotFoundException {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "LONG");
+        LongTask longTask = new LongTask();
+        longTask.setDeadLine(form.getDeadLine());
+        longTask.setSubTaskList(form.getSubTaskList());
+
+        taskService.insertLongTask(taskAbstract, longTask);
+        response.setMessage(taskAbstract.getTid());
+        return response;
+    }
+
+    @PostMapping("/create/temp")
+    public GeneralResponse<String> createTempTask(@RequestBody @Valid TempTaskForm form) throws NotFoundException {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "TEMP");
+        TempTask tempTask = new TempTask();
+        tempTask.setDeadLine(form.getDeadLine());
+
+        taskService.insertTempTask(taskAbstract, tempTask);
+        response.setMessage(taskAbstract.getTid());
+        return response;
+    }
+
+    @PostMapping("/create/interval")
+    public GeneralResponse<String> createIntervalTask(@RequestBody @Valid IntervalTaskForm form) throws NotFoundException {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "INTERVAL");
+        IntervalTask intervalTask = new IntervalTask();
+        intervalTask.setCycle(form.getCycle());
+
+        taskService.insertIntervalTask(taskAbstract, intervalTask);
+        response.setMessage(taskAbstract.getTid());
+        return response;
+    }
+
+    @PostMapping("/{tid}/long")
+    public GeneralResponse<String> updateLongTask(@PathVariable("tid") String tid, @RequestBody @Valid LongTaskForm form) {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "INTERVAL");
+        taskAbstract.setType(tid);
+        LongTask longTask = new LongTask();
+        longTask.setDeadLine(form.getDeadLine());
+        longTask.setSubTaskList(form.getSubTaskList());
+
+        taskService.updateLongTask(taskAbstract, longTask);
+        response.setMessage(taskAbstract.getTid());
+        return response;
+    }
+
+    @PostMapping("/{tid}/temp")
+    public GeneralResponse<String> updateTempTask(@PathVariable("tid") String tid, @RequestBody @Valid TempTaskForm form) {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "TEMP");
+        taskAbstract.setType(tid);
+        TempTask tempTask = new TempTask();
+        tempTask.setDeadLine(form.getDeadLine());
+
+        taskService.updateTempTask(taskAbstract, tempTask);
+        response.setMessage(taskAbstract.getName());
+        return response;
+    }
+
+    @PostMapping("/{tid}/interval")
+    public GeneralResponse<String> updateIntervalTask(@PathVariable("tid") String tid, @RequestBody @Valid IntervalTaskForm form) {
+        GeneralResponse<String> response = new GeneralResponse<>();
+
+        TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "INTERVAL");
+        taskAbstract.setType(tid);
+        IntervalTask intervalTask = new IntervalTask();
+        intervalTask.setCycle(form.getCycle());
+
+        taskService.updateIntervalTask(taskAbstract, intervalTask);
+        response.setMessage(taskAbstract.getName());
+        return response;
+    }
 }

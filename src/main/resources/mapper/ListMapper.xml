@@ -68,4 +68,9 @@
         WHERE lid = #{lid};
     </delete>
 
+    <select id="list" resultType="TaskList">
+        SELECT *
+        FROM todo.list
+        WHERE lid = #{lid}
+    </select>
 </mapper>

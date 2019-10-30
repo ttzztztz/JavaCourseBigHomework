@@ -22,4 +22,5 @@ public interface ListDAO {
     void cascadeIntervalTask(@Param("lid") String lid);
     void cascadeTempTask(@Param("lid") String lid);
 
+    TaskList list(@Param("lid") String lid);
 }
