@@ -1,7 +1,7 @@
-package com.rabbit.todo.Service;
+package com.rabbit.todo.service;
 
-import com.rabbit.todo.DAO.ListDAO;
-import com.rabbit.todo.POJO.TaskList;
+import com.rabbit.todo.dao.ListDAO;
+import com.rabbit.todo.pojo.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

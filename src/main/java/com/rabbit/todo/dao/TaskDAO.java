@@ -1,9 +1,9 @@
-package com.rabbit.todo.DAO;
+package com.rabbit.todo.dao;
 
-import com.rabbit.todo.POJO.IntervalTask;
-import com.rabbit.todo.POJO.LongTask;
-import com.rabbit.todo.POJO.TaskAbstract;
-import com.rabbit.todo.POJO.TempTask;
+import com.rabbit.todo.pojo.IntervalTask;
+import com.rabbit.todo.pojo.LongTask;
+import com.rabbit.todo.pojo.TaskAbstract;
+import com.rabbit.todo.pojo.TempTask;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

@@ -1,9 +1,9 @@
-package com.rabbit.todo.Service;
+package com.rabbit.todo.service;
 
-import com.rabbit.todo.DAO.ListDAO;
-import com.rabbit.todo.DAO.TaskDAO;
-import com.rabbit.todo.Exception.InvalidTypeException;
-import com.rabbit.todo.POJO.*;
+import com.rabbit.todo.dao.ListDAO;
+import com.rabbit.todo.dao.TaskDAO;
+import com.rabbit.todo.exception.InvalidTypeException;
+import com.rabbit.todo.pojo.*;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

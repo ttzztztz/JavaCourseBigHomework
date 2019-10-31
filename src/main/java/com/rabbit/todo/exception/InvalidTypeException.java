@@ -1,4 +1,4 @@
-package com.rabbit.todo.Exception;
+package com.rabbit.todo.exception;
 
 public class InvalidTypeException extends RuntimeException {
     private static final long serialVersionUID = 1L;

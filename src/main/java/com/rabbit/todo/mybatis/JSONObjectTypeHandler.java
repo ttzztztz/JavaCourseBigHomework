@@ -1,4 +1,4 @@
-package com.rabbit.todo.Handler;
+package com.rabbit.todo.mybatis;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 @MappedTypes(JSONObject.class)
 @MappedJdbcTypes(JdbcType.VARCHAR)
-public class JSONTypeHandler extends BaseTypeHandler<JSONObject> {
+public class JSONObjectTypeHandler extends BaseTypeHandler<JSONObject> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JSONObject parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, String.valueOf(parameter.toJSONString()));

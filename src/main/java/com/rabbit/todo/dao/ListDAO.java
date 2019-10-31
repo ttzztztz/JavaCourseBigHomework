@@ -1,6 +1,6 @@
-package com.rabbit.todo.DAO;
+package com.rabbit.todo.dao;
 
-import com.rabbit.todo.POJO.TaskList;
+import com.rabbit.todo.pojo.TaskList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

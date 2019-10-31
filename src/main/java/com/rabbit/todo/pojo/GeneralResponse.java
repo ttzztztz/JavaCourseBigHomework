@@ -1,4 +1,4 @@
-package com.rabbit.todo.POJO;
+package com.rabbit.todo.pojo;
 
 import lombok.Data;
 

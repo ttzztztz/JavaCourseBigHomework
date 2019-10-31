@@ -1,8 +1,10 @@
-package com.rabbit.todo.Controller;
+package com.rabbit.todo.controller;
 
-import com.rabbit.todo.Exception.InvalidTypeException;
-import com.rabbit.todo.POJO.*;
-import com.rabbit.todo.Service.TaskService;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.rabbit.todo.exception.InvalidTypeException;
+import com.rabbit.todo.pojo.*;
+import com.rabbit.todo.service.TaskService;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -56,8 +58,7 @@ public class TaskController {
         TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "LONG");
         LongTask longTask = new LongTask();
         longTask.setDeadLine(form.getDeadLine());
-        longTask.setSubTaskList(form.getSubTaskList());
-
+        longTask.setSubTaskList((JSONArray) JSONArray.toJSON(form.getSubTaskList()));
         taskService.insertLongTask(taskAbstract, longTask);
         response.setMessage(taskAbstract.getTid());
         return response;
@@ -97,8 +98,7 @@ public class TaskController {
         taskAbstract.setType(tid);
         LongTask longTask = new LongTask();
         longTask.setDeadLine(form.getDeadLine());
-        longTask.setSubTaskList(form.getSubTaskList());
-
+        longTask.setSubTaskList((JSONArray) JSONArray.toJSON(form.getSubTaskList()));
         taskService.updateLongTask(taskAbstract, longTask);
         response.setMessage(taskAbstract.getTid());
         return response;

@@ -1,9 +1,9 @@
-package com.rabbit.todo.Controller;
+package com.rabbit.todo.controller;
 
-import com.rabbit.todo.POJO.GeneralResponse;
-import com.rabbit.todo.POJO.ListForm;
-import com.rabbit.todo.POJO.TaskList;
-import com.rabbit.todo.Service.ListService;
+import com.rabbit.todo.pojo.GeneralResponse;
+import com.rabbit.todo.pojo.ListForm;
+import com.rabbit.todo.pojo.TaskList;
+import com.rabbit.todo.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

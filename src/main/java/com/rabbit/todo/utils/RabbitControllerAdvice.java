@@ -1,6 +1,6 @@
-package com.rabbit.todo.Utils;
+package com.rabbit.todo.utils;
 
-import com.rabbit.todo.POJO.GeneralResponse;
+import com.rabbit.todo.pojo.GeneralResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

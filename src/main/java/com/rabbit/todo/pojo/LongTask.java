@@ -1,5 +1,6 @@
-package com.rabbit.todo.POJO;
+package com.rabbit.todo.pojo;
 
+import com.alibaba.fastjson.JSONArray;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,5 @@ public class LongTask implements Task {
     private String tid;
     private Date deadLine;
 
-    // todo: JSON ?
-    private String subTaskList;
+    private JSONArray subTaskList;
 }
