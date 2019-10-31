@@ -1,0 +1,10 @@
+.list {
+    display: flex;
+    flex-flow: row;
+}
+.task-container {
+    margin-left: 24px;
+}
+.subtask-container {
+    margin-left: 24px;
+}
