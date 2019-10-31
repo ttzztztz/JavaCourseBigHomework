@@ -126,18 +126,21 @@ public class TaskService {
     @Transactional
     public void insertLongTask(TaskAbstract taskAbstract, LongTask longTask) throws NotFoundException {
         insertTask(taskAbstract);
+        longTask.setTid(taskAbstract.getTid());
         taskDAO.insertLongTask(longTask);
     }
 
     @Transactional
     public void insertTempTask(TaskAbstract taskAbstract, TempTask tempTask) throws NotFoundException {
         insertTask(taskAbstract);
+        tempTask.setTid(taskAbstract.getTid());
         taskDAO.insertTempTask(tempTask);
     }
 
     @Transactional
     public void insertIntervalTask(TaskAbstract taskAbstract, IntervalTask intervalTask) throws NotFoundException {
         insertTask(taskAbstract);
+        intervalTask.setTid(taskAbstract.getTid());
         taskDAO.insertIntervalTask(intervalTask);
     }
 

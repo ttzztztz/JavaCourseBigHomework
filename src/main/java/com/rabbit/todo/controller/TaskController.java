@@ -1,7 +1,6 @@
 package com.rabbit.todo.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.rabbit.todo.exception.InvalidTypeException;
 import com.rabbit.todo.pojo.*;
 import com.rabbit.todo.service.TaskService;
@@ -90,7 +89,7 @@ public class TaskController {
         return response;
     }
 
-    @PostMapping("/{tid}/long")
+    @PutMapping("/{tid}/long")
     public GeneralResponse<String> updateLongTask(@PathVariable("tid") String tid, @RequestBody @Valid LongTaskForm form) {
         GeneralResponse<String> response = new GeneralResponse<>();
 
@@ -104,7 +103,7 @@ public class TaskController {
         return response;
     }
 
-    @PostMapping("/{tid}/temp")
+    @PutMapping("/{tid}/temp")
     public GeneralResponse<String> updateTempTask(@PathVariable("tid") String tid, @RequestBody @Valid TempTaskForm form) {
         GeneralResponse<String> response = new GeneralResponse<>();
 
@@ -118,7 +117,7 @@ public class TaskController {
         return response;
     }
 
-    @PostMapping("/{tid}/interval")
+    @PutMapping("/{tid}/interval")
     public GeneralResponse<String> updateIntervalTask(@PathVariable("tid") String tid, @RequestBody @Valid IntervalTaskForm form) {
         GeneralResponse<String> response = new GeneralResponse<>();
 
