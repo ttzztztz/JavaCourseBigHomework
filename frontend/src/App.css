@@ -8,3 +8,10 @@
 .subtask-container {
     margin-left: 24px;
 }
+.tool {
+    margin-top: 24px;
+}
+.edit-task-container {
+    display: flex;
+    flex-flow: column;
+}

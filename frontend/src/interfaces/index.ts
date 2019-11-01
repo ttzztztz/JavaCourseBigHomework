@@ -3,7 +3,7 @@ export interface ITaskAbstract {
     lid: string;
     name: string;
     description: string;
-    type: string;
+    type: ITaskEnumString;
     rank: number;
     status: number;
 }
@@ -67,7 +67,8 @@ export interface IGeneralResponse<T> {
     message: T;
 }
 
-export type ITaskEnum = ISubTask | ILongTask | IIntervalTask;
+export type ITaskEnum = ITempTask | ILongTask | IIntervalTask;
+export type ITaskEnumString = "TEMP" | "LONG" | "INTERVAL" | "INVALID";
 
 export interface ITaskResponse {
     info: ITaskAbstract;
