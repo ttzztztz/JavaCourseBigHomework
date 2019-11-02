@@ -6,6 +6,7 @@ import AbstractTask from "../components/Task/AbstractTask";
 import LongTask from "../components/Task/LongTask";
 import TempTask from "../components/Task/TempTask";
 import IntervalTask from "../components/Task/IntervalTask";
+import axios from "axios";
 
 interface ParamProps {
     tid: string;
@@ -31,10 +32,8 @@ const ItemView: React.FC<RouteComponentProps<ParamProps>> = ({
 
     useEffect(() => {
         const fetchDetail = async () => {
-            const res = await fetch(TASK_OPTIONS(tid), {
-                method: "GET"
-            });
-            const { message } = (await res.json()) as IGeneralResponse<ITaskResponse>;
+            const res = await axios.get(TASK_OPTIONS(tid));
+            const { message } = res.data as IGeneralResponse<ITaskResponse>;
             setTask(message);
         };
 

@@ -9,16 +9,15 @@ import EditTask from "./View/Edit/Task";
 import { ITaskList, IGeneralResponse } from "./interfaces";
 import { LISTS } from "./models/urls";
 import TaskList from "./components/List/TaskList";
+import axios from "axios";
 
 const App: React.FC = () => {
     const [lists, setLists] = useState([] as Array<ITaskList>);
 
     useEffect(() => {
         const fetchLists = async () => {
-            const res = await fetch(LISTS, {
-                method: "GET"
-            });
-            const { message } = (await res.json()) as IGeneralResponse<Array<ITaskList>>;
+            const res = await axios.get(LISTS);
+            const { message } = res.data as IGeneralResponse<Array<ITaskList>>;
             setLists(message);
         };
 
@@ -37,6 +36,8 @@ const App: React.FC = () => {
                             <Route path="/item/:tid" component={ItemView} />
                             <Route path="/create/list" component={EditList} />
                             <Route path="/create/task" component={() => <EditTask lists={lists} />} />
+                            <Route path="/edit/list/:lid" component={EditList} />
+                            <Route path="/edit/task/:tid" component={() => <EditTask lists={lists} />} />
                         </Switch>
                     </div>
                 </div>

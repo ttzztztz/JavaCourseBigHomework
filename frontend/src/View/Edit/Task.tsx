@@ -2,24 +2,54 @@ import React, { useState } from "react";
 import { ITaskList, ITaskEnumString } from "../../interfaces";
 
 const LongTaskInput: React.FC = () => {
-    return <></>;
+    const nowDate = new Date();
+    const [deadLineDate, setDeadLineDate] = useState(
+        `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`
+    );
+    const [deadLineTime, setDeadLineTime] = useState(
+        `${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`
+    );
+
+    return (
+        <>
+            <input type="date" value={deadLineDate} onChange={e => setDeadLineDate(e.target.value)} />
+            <input type="time" value={deadLineTime} onChange={e => setDeadLineTime(e.target.value)} />
+        </>
+    );
 };
 const IntervalTaskInput: React.FC = () => {
     const nowDate = new Date();
     const [cycle, setCycle] = useState(0);
-    const [date, setDate] = useState(`${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`);
-    const [time, setTime] = useState(`${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`);
+    const [deadLineDate, setDeadLineDate] = useState(
+        `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`
+    );
+    const [deadLineTime, setDeadLineTime] = useState(
+        `${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`
+    );
 
     return (
         <>
             <input type="number" value={cycle} onChange={e => setCycle(Number.parseInt(e.target.value))} />
-            <input type="date" value={date} onChange={e => setDate(e.target.value)} />
-            <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+            <input type="date" value={deadLineDate} onChange={e => setDeadLineDate(e.target.value)} />
+            <input type="time" value={deadLineTime} onChange={e => setDeadLineTime(e.target.value)} />
         </>
     );
 };
 const TempTaskInput: React.FC = () => {
-    return <></>;
+    const nowDate = new Date();
+    const [deadLineDate, setDeadLineDate] = useState(
+        `${nowDate.getFullYear()}-${nowDate.getMonth() + 1}-${nowDate.getDate()}`
+    );
+    const [deadLineTime, setDeadLineTime] = useState(
+        `${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`
+    );
+
+    return (
+        <>
+            <input type="date" value={deadLineDate} onChange={e => setDeadLineDate(e.target.value)} />
+            <input type="time" value={deadLineTime} onChange={e => setDeadLineTime(e.target.value)} />
+        </>
+    );
 };
 
 const EditTask: React.FC<{
