@@ -18,6 +18,7 @@ export interface ISubTask {
     name: string;
     deadLine: Date;
     subTaskList: Array<ISubTask>;
+    lazyTag?: boolean;
 }
 
 export interface ILongTask {

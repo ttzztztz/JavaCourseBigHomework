@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     <div className="task-container">
                         <Switch>
                             <Redirect from="/" to="/list/all/1" exact />
-                            <Route path="/list/:lid/:page" component={ListView} />
+                            <Route path="/list/:lid/:page" component={() => <ListView lists={lists} />} />
                             <Route path="/item/:tid" component={ItemView} />
                             <Route path="/create/list" component={EditList} />
                             <Route path="/create/task" component={() => <EditTask lists={lists} />} />

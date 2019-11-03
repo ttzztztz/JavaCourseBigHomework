@@ -17,10 +17,14 @@ public interface ListDAO {
     void edit(@Param("lid") String lid, @Param("name") String name, @Param("rank") Integer rank);
 
     void deleteList(@Param("lid") String lid);
+
     void deleteTaskList(@Param("lid") String lid);
+
     void cascadeLongTask(@Param("lid") String lid);
+
     void cascadeIntervalTask(@Param("lid") String lid);
+
     void cascadeTempTask(@Param("lid") String lid);
 
-    TaskList list(@Param("lid") String lid);
+    TaskList info(@Param("lid") String lid);
 }

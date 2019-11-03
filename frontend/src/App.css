@@ -6,7 +6,7 @@
     margin-left: 24px;
 }
 .subtask-container {
-    margin-left: 24px;
+    margin: 12px 0 12px 24px;
 }
 .tool {
     margin-top: 24px;
@@ -14,4 +14,13 @@
 .edit-task-container {
     display: flex;
     flex-flow: column;
+}
+.task-all-container {
+    margin-bottom: 24px;
+}
+.abstract-task-description {
+    margin: 12px 0;
+}
+.abstract-task-state {
+    font-size: small;
 }

@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { LIST_OPTIONS, LIST_CREATE } from "../../models/urls";
+import { LIST_OPTIONS, LIST_CREATE, LIST_INFO } from "../../models/urls";
 import axios from "axios";
+import { IGeneralResponse, ITaskList } from "../../interfaces";
 
 interface ParamProps {
-    tid: string;
+    lid: string;
 }
 
 const EditList: React.FC<RouteComponentProps<ParamProps>> = ({
     match: {
         path,
-        params: { tid }
+        params: { lid }
     },
     history
 }) => {
     const [name, setName] = useState("");
     const handleSubmit = () => {
         const editList = async () => {
-            await axios.post(LIST_OPTIONS(tid), {
+            await axios.post(LIST_OPTIONS(lid), {
                 name,
                 rank: 1
             });
@@ -44,6 +45,18 @@ const EditList: React.FC<RouteComponentProps<ParamProps>> = ({
             editList();
         }
     };
+
+    useEffect(() => {
+        const fetchLists = async () => {
+            const res = await axios.get(LIST_INFO(lid));
+            const { message } = res.data as IGeneralResponse<ITaskList>;
+            setName(message.name);
+        };
+
+        if (path === "/edit/list/:lid") {
+            fetchLists();
+        }
+    }, [path, lid]);
 
     return (
         <>

@@ -20,6 +20,13 @@ public class ListController {
         this.listService = listService;
     }
 
+    @GetMapping("/{lid}")
+    public GeneralResponse<TaskList> info(@PathVariable("lid") String lid) {
+        GeneralResponse<TaskList> response = new GeneralResponse<>();
+        response.setMessage(listService.info(lid));
+        return response;
+    }
+
     @GetMapping("/")
     public GeneralResponse<List<TaskList>> list() {
         GeneralResponse<List<TaskList>> response = new GeneralResponse<>();

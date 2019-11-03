@@ -6,7 +6,7 @@ const TempTask: React.FC<{
 }> = ({ item }) => {
     return (
         <div className="temp-task">
-            <p>{item.deadLine}</p>
+            <div>{item.deadLine}</div>
         </div>
     );
 };

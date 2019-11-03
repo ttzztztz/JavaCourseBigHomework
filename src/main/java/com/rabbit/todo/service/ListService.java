@@ -37,4 +37,8 @@ public class ListService {
     public void update(TaskList list) {
         listDAO.edit(list.getLid(), list.getName(), list.getRank());
     }
+
+    public TaskList info(String lid) {
+        return listDAO.info(lid);
+    }
 }

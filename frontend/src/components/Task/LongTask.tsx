@@ -5,7 +5,7 @@ import SubTask from "./SubTask";
 const LongTask: React.FC<{ item: ILongTask }> = ({ item }) => {
     return (
         <div className="long-task">
-            <p>{new Date(item.deadLine).toLocaleString()}</p>
+            <div>{new Date(item.deadLine).toLocaleString()}</div>
             <h3>子任务</h3>
             <div>
                 {item.subTaskList.map((item, key) => (

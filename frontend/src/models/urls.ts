@@ -10,3 +10,4 @@ export const TASK_LIST = (lid: string, page: string) => `${BACKEND_URL}/task/lis
 export const LISTS = `${BACKEND_URL}/list/`;
 export const LIST_OPTIONS = (lid: string) => `${BACKEND_URL}/list/${lid}`;
 export const LIST_CREATE = `${BACKEND_URL}/list/create`;
+export const LIST_INFO = (lid: string) => `${BACKEND_URL}/list/${lid}`;

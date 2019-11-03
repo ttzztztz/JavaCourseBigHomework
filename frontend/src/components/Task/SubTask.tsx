@@ -6,14 +6,14 @@ const SubTask: React.FC<{
 }> = ({ item }) => {
     return (
         <div className="subtask-container">
-            <p>{item.name}</p>
-            <p>{new Date(item.deadLine).toLocaleString()}</p>
+            <div>{item.name}</div>
+            <div>{new Date(item.deadLine).toLocaleString()}</div>
             {item.subTaskList.length > 0 && <h3>子任务</h3>}
-            <p>
+            <div>
                 {item.subTaskList.map((item, index) => (
                     <SubTask item={item} key={index} />
                 ))}
-            </p>
+            </div>
         </div>
     );
 };

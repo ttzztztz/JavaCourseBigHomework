@@ -5,6 +5,15 @@ import { withRouter, RouteComponentProps } from "react-router-dom";
 const TaskList: React.FC<{ all: Array<ITaskList> } & RouteComponentProps<{}>> = ({ all, history }) => {
     return (
         <div className="sidebar">
+            <div className="task-all-container">
+                <button
+                    onClick={() => {
+                        history.push("/list/all/1");
+                    }}
+                >
+                    全部
+                </button>
+            </div>
             <div className="task-list">
                 {all.map((item, key) => (
                     <div key={key}>

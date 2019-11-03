@@ -4,10 +4,10 @@ import { IIntervalTask } from "../../interfaces";
 const IntervalTask: React.FC<{ item: IIntervalTask }> = ({ item }) => {
     return (
         <div className="interval-task">
-            <p>
+            <div>
                 {item.cycle}
                 {item.lastExecuted}
-            </p>
+            </div>
         </div>
     );
 };

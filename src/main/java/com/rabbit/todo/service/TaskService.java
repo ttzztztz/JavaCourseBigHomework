@@ -116,7 +116,7 @@ public class TaskService {
     }
 
     private void insertTask(TaskAbstract taskAbstract) throws NotFoundException {
-        TaskList taskList = listDAO.list(taskAbstract.getLid());
+        TaskList taskList = listDAO.info(taskAbstract.getLid());
         if (taskList == null) {
             throw new NotFoundException("target list not found!");
         }

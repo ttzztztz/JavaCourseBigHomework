@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.rabbit.todo.dao.ListDAO">
+    <select id="info" resultType="TaskList">
+        SELECT `lid`, `name`, `rank`
+        FROM todo.list
+        WHERE lid = #{lid}
+    </select>
+
     <select id="all" resultType="TaskList">
         SELECT `lid`, `name`, `rank`
         FROM todo.list
@@ -68,9 +74,4 @@
         WHERE lid = #{lid};
     </delete>
 
-    <select id="list" resultType="TaskList">
-        SELECT *
-        FROM todo.list
-        WHERE lid = #{lid}
-    </select>
 </mapper>
