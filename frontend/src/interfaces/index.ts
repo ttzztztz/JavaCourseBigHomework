@@ -14,10 +14,10 @@ export interface IIntervalTask {
     cycle: number;
 }
 
-export interface ISubTask {
+export interface ISubTask<T = Date> {
     name: string;
-    deadLine: Date;
-    subTaskList: Array<ISubTask>;
+    deadLine: T;
+    subTaskList: Array<ISubTask<T>>;
     lazyTag?: boolean;
 }
 

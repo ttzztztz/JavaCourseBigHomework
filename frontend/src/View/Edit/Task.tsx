@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 import axios from "axios";
 import { TASK_CREATE } from "../../models/urls";
 import { EnumTypeToUrlType } from "../../models/toUrlType";
+const format = require("date-format");
 
 interface DeadLineState {
     deadLineDate: string;
@@ -53,9 +54,13 @@ const DateToDeadLineState = (date?: Date): DeadLineState => {
     const realDate = new Date(rawDate);
 
     return {
-        deadLineDate: `${realDate.getFullYear()}-${realDate.getMonth() + 1}-${realDate.getDate()}`,
-        deadLineTime: `${realDate.getHours()}:${realDate.getMinutes()}:${realDate.getSeconds()}`
+        deadLineDate: format.asString("yyyy-MM-dd", realDate),
+        deadLineTime: format.asString("hh:mm:ss.000", realDate)
     };
+};
+
+const DateToNumber = (date: Date): number => {
+    return date.getTime();
 };
 
 const DeadLineStateToDate = (state: DeadLineState): Date => {
@@ -78,7 +83,7 @@ const EditTask: React.FC<EditTaskProps> = ({
     }
 }) => {
     const [name, setName] = useState("");
-    const [lid, setLid] = useState("");
+    const [lid, setLid] = useState(lists.length > 0 ? lists[0].lid : "");
     const [type, setType] = useState("TEMP" as ITaskEnumString);
     const [description, setDescription] = useState("");
     const [deadLine, setDeadLine] = useState(DateToDeadLineState());
@@ -102,6 +107,34 @@ const EditTask: React.FC<EditTaskProps> = ({
             currentNode!.lazyTag = true;
             setSubTask([...subTask]);
         };
+        const SubTaskInputItem: React.FC<{ sub: ISubTask }> = ({ sub }) => {
+            const [nameView, setNameView] = useState(sub.name);
+            const [deadLineView, setDeadLineView] = useState(DateToDeadLineState(sub.deadLine));
+
+            return (
+                <div>
+                    <input
+                        type="text"
+                        placeholder="子任务名"
+                        required
+                        onChange={e => {
+                            sub.name = e.target.value;
+                            setNameView(sub.name);
+                        }}
+                        value={nameView}
+                    />
+                    <DeadLineInput
+                        deadLineState={deadLineView}
+                        onChange={newState => {
+                            sub.deadLine = DeadLineStateToDate(newState);
+                            setDeadLineView(newState);
+                        }}
+                    />
+                    {<SubTaskInput subTaskList={sub.subTaskList} isTop={false} currentNode={sub} />}
+                </div>
+            );
+        };
+
         return (
             <>
                 <div>
@@ -123,26 +156,7 @@ const EditTask: React.FC<EditTaskProps> = ({
                         {subTaskList
                             .filter(sub => !!!sub.lazyTag)
                             .map((sub, key) => (
-                                <div key={key}>
-                                    <input
-                                        type="text"
-                                        placeholder="子任务名"
-                                        required
-                                        onChange={e => {
-                                            sub.name = e.target.value;
-                                            setSubTask([...subTask]);
-                                        }}
-                                        value={sub.name}
-                                    />
-                                    <DeadLineInput
-                                        deadLineState={DateToDeadLineState(sub.deadLine)}
-                                        onChange={newState => {
-                                            sub.deadLine = DeadLineStateToDate(newState);
-                                            setSubTask([...subTask]);
-                                        }}
-                                    />
-                                    {<SubTaskInput subTaskList={sub.subTaskList} isTop={false} currentNode={sub} />}
-                                </div>
+                                <SubTaskInputItem key={key} sub={sub} />
                             ))}
                     </div>
                 )}
@@ -174,16 +188,16 @@ const EditTask: React.FC<EditTaskProps> = ({
     };
     const handleSubmit = async () => {
         const collectReqeustBody = () => {
-            const dfs = (subTask: Array<ISubTask>): Array<ISubTask> => {
-                const __innerDfs = (subTask: ISubTask) => {
-                    // this subTask must exist and lazytag is false
-                    subTask.subTaskList = subTask.subTaskList.filter(sub => !!!sub.lazyTag);
-                    subTask.subTaskList.forEach(sub => __innerDfs(sub));
+            const dfs = (subTask: Array<ISubTask<Date>>): Array<ISubTask<number>> => {
+                const __innerDfs = (obj: ISubTask<Date>): ISubTask<number> => {
+                    return {
+                        ...obj,
+                        subTaskList: obj.subTaskList.filter(sub => !!!sub.lazyTag).map(sub => __innerDfs(sub)),
+                        deadLine: DateToNumber(obj.deadLine)
+                    };
                 };
 
-                const result = subTask.filter(sub => !!!sub.lazyTag);
-                result.forEach(sub => __innerDfs(sub));
-                return result;
+                return subTask.filter(sub => !!!sub.lazyTag).map(sub => __innerDfs(sub));
             };
 
             const basicInfo = {
@@ -201,13 +215,13 @@ const EditTask: React.FC<EditTaskProps> = ({
             } else if (type === "LONG") {
                 return {
                     ...basicInfo,
-                    deadLine: DeadLineStateToDate(deadLine),
+                    deadLine: DateToNumber(DeadLineStateToDate(deadLine)),
                     subTaskList: dfs(subTask)
                 };
             } else if (type === "TEMP") {
                 return {
                     ...basicInfo,
-                    deadLine: DeadLineStateToDate(deadLine)
+                    deadLine: DateToNumber(DeadLineStateToDate(deadLine))
                 };
             } else {
                 return basicInfo;
