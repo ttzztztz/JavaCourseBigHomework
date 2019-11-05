@@ -94,7 +94,7 @@ public class TaskController {
         GeneralResponse<String> response = new GeneralResponse<>();
 
         TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "INTERVAL");
-        taskAbstract.setType(tid);
+        taskAbstract.setTid(tid);
         LongTask longTask = new LongTask();
         longTask.setDeadLine(form.getDeadLine());
         longTask.setSubTaskList((JSONArray) JSONArray.toJSON(form.getSubTaskList()));
@@ -108,7 +108,7 @@ public class TaskController {
         GeneralResponse<String> response = new GeneralResponse<>();
 
         TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "TEMP");
-        taskAbstract.setType(tid);
+        taskAbstract.setTid(tid);
         TempTask tempTask = new TempTask();
         tempTask.setDeadLine(form.getDeadLine());
 
@@ -122,7 +122,7 @@ public class TaskController {
         GeneralResponse<String> response = new GeneralResponse<>();
 
         TaskAbstract taskAbstract = taskService.convertTaskFormToTaskAbstract(form, "INTERVAL");
-        taskAbstract.setType(tid);
+        taskAbstract.setTid(tid);
         IntervalTask intervalTask = new IntervalTask();
         intervalTask.setCycle(form.getCycle());
 

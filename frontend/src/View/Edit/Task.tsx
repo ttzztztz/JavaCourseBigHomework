@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { ITaskList, ITaskEnumString, ISubTask } from "../../interfaces";
+import React, { useState, useEffect } from "react";
+import {
+    ITaskList,
+    ITaskEnumString,
+    ISubTask,
+    IGeneralResponse,
+    ITaskResponse,
+    ITempTask,
+    IIntervalTask,
+    ILongTask
+} from "../../interfaces";
 import { withRouter, RouteComponentProps } from "react-router";
 import axios from "axios";
-import { TASK_CREATE } from "../../models/urls";
+import { TASK_CREATE, TASK_EDIT, TASK_OPTIONS } from "../../models/urls";
 import { EnumTypeToUrlType } from "../../models/toUrlType";
+
 const format = require("date-format");
 
 interface DeadLineState {
@@ -59,8 +69,12 @@ const DateToDeadLineState = (date?: Date): DeadLineState => {
     };
 };
 
-const DateToNumber = (date: Date): number => {
-    return date.getTime();
+const DateToNumber = (date: Date | number): number => {
+    if (typeof date === "number") {
+        return date;
+    } else {
+        return date.getTime();
+    }
 };
 
 const DeadLineStateToDate = (state: DeadLineState): Date => {
@@ -89,6 +103,38 @@ const EditTask: React.FC<EditTaskProps> = ({
     const [deadLine, setDeadLine] = useState(DateToDeadLineState());
     const [cycle, setCycle] = useState(0);
     const [subTask, setSubTask] = useState([] as Array<ISubTask>);
+
+    useEffect(() => {
+        const fetchTaskInfo = async () => {
+            const res = await axios.get(TASK_OPTIONS(tid));
+            const { message } = res.data as IGeneralResponse<ITaskResponse>;
+            const {
+                info: { name, lid: _lid, type, description },
+                detail
+            } = message;
+            setName(name);
+            setLid(_lid);
+            setType(type);
+            setDescription(description);
+
+            if (type === "INTERVAL") {
+                const { lastExecuted: deadLine, cycle } = detail as IIntervalTask;
+                setDeadLine(DateToDeadLineState(new Date(deadLine)));
+                setCycle(cycle);
+            } else if (type === "LONG") {
+                const { deadLine, subTaskList } = detail as ILongTask;
+                setDeadLine(DateToDeadLineState(new Date(deadLine)));
+                setSubTask(subTaskList);
+            } else if (type === "TEMP") {
+                const { deadLine } = detail as ITempTask;
+                setDeadLine(DateToDeadLineState(new Date(deadLine)));
+            }
+        };
+
+        if (path === "/edit/task/:tid") {
+            fetchTaskInfo();
+        }
+    }, [path, tid]);
 
     const SubTaskInput: React.FC<{ subTaskList: Array<ISubTask>; isTop: boolean; currentNode?: ISubTask }> = ({
         subTaskList,
@@ -229,6 +275,8 @@ const EditTask: React.FC<EditTaskProps> = ({
         };
         const body = collectReqeustBody();
         if (path === "/edit/task/:tid") {
+            await axios.put(TASK_EDIT(tid, EnumTypeToUrlType(type)), body);
+            alert("编辑成功！");
         } else if (path === "/create/task") {
             await axios.post(TASK_CREATE(EnumTypeToUrlType(type)), body);
             alert("添加成功！");
@@ -256,16 +304,18 @@ const EditTask: React.FC<EditTaskProps> = ({
                     onChange={e => setDescription(e.target.value)}
                     value={description}
                 />
-                <select
-                    name="type"
-                    defaultValue="TEMP"
-                    required
-                    onChange={e => setType(e.target.value as ITaskEnumString)}
-                >
-                    <option value="LONG">长期任务</option>
-                    <option value="INTERVAL">周期任务</option>
-                    <option value="TEMP">临时任务</option>
-                </select>
+                {path !== "/edit/task/:tid" && (
+                    <select
+                        name="type"
+                        defaultValue="TEMP"
+                        required
+                        onChange={e => setType(e.target.value as ITaskEnumString)}
+                    >
+                        <option value="LONG">长期任务</option>
+                        <option value="INTERVAL">周期任务</option>
+                        <option value="TEMP">临时任务</option>
+                    </select>
+                )}
                 {type === "INTERVAL" && <IntervalTaskInput />}
                 {type === "LONG" && <LongTaskInput />}
                 {type === "TEMP" && <TempTaskInput />}

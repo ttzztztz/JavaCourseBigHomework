@@ -84,7 +84,7 @@ public class TaskService {
 
     @Transactional
     public void updateLongTask(TaskAbstract taskAbstract, LongTask longTask) {
-        String type = taskDAO.taskType(longTask.getTid());
+        String type = taskDAO.taskType(taskAbstract.getTid());
         if (!type.equals("LONG")) {
             throw new InvalidTypeException(type);
         }
@@ -95,7 +95,7 @@ public class TaskService {
 
     @Transactional
     public void updateTempTask(TaskAbstract taskAbstract, TempTask tempTask) {
-        String type = taskDAO.taskType(tempTask.getTid());
+        String type = taskDAO.taskType(taskAbstract.getTid());
         if (!type.equals("TEMP")) {
             throw new InvalidTypeException(type);
         }
@@ -106,7 +106,7 @@ public class TaskService {
 
     @Transactional
     public void updateIntervalTask(TaskAbstract taskAbstract, IntervalTask intervalTask) {
-        String type = taskDAO.taskType(intervalTask.getTid());
+        String type = taskDAO.taskType(taskAbstract.getTid());
         if (!type.equals("INTERVAL")) {
             throw new InvalidTypeException(type);
         }

@@ -92,9 +92,9 @@
             <if test="description != null">
                 description = #{description},
             </if>
-            <if test="type != null">
-                type = #{type},
-            </if>
+<!--            <if test="type != null">-->
+<!--                type = #{type},-->
+<!--            </if>-->
             <if test="rank != null">
                 `rank` = #{rank},
             </if>
@@ -141,7 +141,7 @@
         WHERE tid = #{tid}
     </update>
 
-    <select id="taskType">
+    <select id="taskType" resultType="String">
         SELECT type
         FROM todo.task
         WHERE tid = #{tid}
