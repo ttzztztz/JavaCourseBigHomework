@@ -2,6 +2,8 @@ package com.rabbit.todo.pojo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class TaskAbstract implements Task {
     private String tid;
@@ -16,4 +18,5 @@ public class TaskAbstract implements Task {
 
     // [-1, 1] tinyint
     private Integer status;
+    private Date createDate;
 }
